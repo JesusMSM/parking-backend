@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -28,7 +29,7 @@ public class SlotController {
 
     @PostMapping("/api/parkings/{parkingId}/slots/create")
     public List<Slot> createSlot(@PathVariable Long parkingId,
-                                 @RequestBody SlotCreationResource slotCreationResource) {
+                                 @RequestBody @Valid SlotCreationResource slotCreationResource) {
         Parking parking = parkingService.findParkingById(parkingId);
         return slotService.createSlots(parking, slotCreationResource.getSlotType(), slotCreationResource.getNumberOfAvailableSlots());
     }
@@ -36,7 +37,7 @@ public class SlotController {
     @PutMapping("/api/parkings/{parkingId}/slots/{slotId}/update")
     public Slot updateSlot(@PathVariable Long parkingId,
                            @PathVariable Long slotId,
-                           @RequestBody SlotUpdateResource slotUpdateResource) {
+                           @RequestBody @Valid SlotUpdateResource slotUpdateResource) {
         Slot slot = slotService.findSlotByIdAndParkingId(slotId, parkingId);
         return slotService.updateSlot(slot, slotUpdateResource);
     }

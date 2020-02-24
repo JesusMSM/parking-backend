@@ -74,7 +74,6 @@ public class ParkingServiceImpl implements ParkingService {
         Optional<Long> slotId = slotService.getSlotsFromParking(parkingId).stream()
                 .filter(slot -> slot.getSlotType().equals(carArrivalResource.getCarType()) && !slot.isOccupied())
                 .map(Slot::getId).findFirst();
-
         slotId.ifPresent(aLong -> slotService.occupySlot(aLong, parkingId, carArrivalResource.getPlateNumber()));
         return slotId;
     }

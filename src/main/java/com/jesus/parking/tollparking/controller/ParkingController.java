@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class ParkingController {
     }
 
     @PutMapping("/api/parkings/{parkingId}/update")
-    public Parking updateParking(@PathVariable Long parkingId, @RequestBody ParkingUpdateResource parkingUpdateResource){
+    public Parking updateParking(@PathVariable Long parkingId, @RequestBody @Valid ParkingUpdateResource parkingUpdateResource){
         return parkingService.updateParking(parkingId, parkingUpdateResource);
     }
 
@@ -49,7 +50,7 @@ public class ParkingController {
     }
 
     @PostMapping("/api/parkings/{parkingId}/carArrival")
-    public Map<String, String> carArrival(@PathVariable Long parkingId, @RequestBody CarArrivalResource carArrivalResource) {
+    public Map<String, String> carArrival(@PathVariable Long parkingId, @RequestBody @Valid CarArrivalResource carArrivalResource) {
         HashMap<String, String> response = new HashMap<>();
         Optional<Long> slotId = parkingService.carArrival(parkingId, carArrivalResource);
         if(slotId.isPresent()){
@@ -61,7 +62,7 @@ public class ParkingController {
     }
 
     @PostMapping("/api/parkings/{parkingId}/carDeparture")
-    public Map<String, String> carLeaves(@PathVariable Long parkingId, @RequestBody CarDepartureResource carDepartureResource) {
+    public Map<String, String> carLeaves(@PathVariable Long parkingId, @RequestBody @Valid CarDepartureResource carDepartureResource) {
         HashMap<String, String> response = new HashMap<>();
         double price = parkingService.carDeparture(parkingId, carDepartureResource);
         response.put("value", "Thank you for using our parking. The total amount of your bill is " + price);
