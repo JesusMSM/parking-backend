@@ -25,7 +25,6 @@ You can create a new Parking by making a HTTP POST request to http://localhost:8
 ```
 {
   "fixedPrice": 0,
-  "id": 0,
   "pricePerHour": 0,
   "pricingPolicy": "DYNAMIC",
   "slots": [
